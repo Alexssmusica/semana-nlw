@@ -27,18 +27,12 @@ const CreatePoint = () => {
   const [items, setItems] = useState<Item[]>([]);
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
   const [ufs, setUfs] = useState<string[]>([]);
+  const [cities, setCities] = useState<string[]>([]);
   const [selectedUf, setSelectedUf] = useState("0");
   const [selectedCity, setSelectedCity] = useState("0");
   const [selectedFile, setSelectedFile] = useState<File>();
-  const [cities, setCities] = useState<string[]>([]);
-  const [selectedPosition, setSelectedPosition] = useState<[number, number]>([
-    0,
-    0,
-  ]);
-  const [initialPosition, setInitialPosition] = useState<[number, number]>([
-    0,
-    0,
-  ]);
+  const [selectedPosition, setSelectedPosition] = useState<[number, number]>([ 0, 0]);
+  const [initialPosition, setInitialPosition] = useState<[number, number]>([0, 0]);
 
   const [formData, setFormData] = useState({
     name: "",
