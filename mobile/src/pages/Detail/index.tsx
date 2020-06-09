@@ -3,7 +3,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import Constants from "expo-constants";
 import * as MailComposer from 'expo-mail-composer';
 import React, { useEffect, useState } from "react";
-import { Image, Linking, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Linking, Platform, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import api from "../../services/Api";
 
@@ -55,7 +55,10 @@ const Detail = () => {
     }
 
     function handleComposeWhatsapp() {
-        Linking.openURL(`whatsapp://send?phone=${data.point.whatsapp}&text=Tenho interesse sobre coleta de resíduos`)
+        let phoneWithCountryCode = data.point.whatsapp;
+        let whatsapp = Platform.OS == 'ios' ? phoneWithCountryCode : `+${phoneWithCountryCode}`;
+        
+        Linking.openURL(`whatsapp://send?phone=${whatsapp}&text=Tenho interesse sobre coleta de resíduos`)
     }
 
     return (

@@ -2,6 +2,7 @@ import axios from "axios";
 import { LeafletMouseEvent } from "leaflet";
 import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { FiArrowLeft } from "react-icons/fi";
+import InputMask from 'react-input-mask';
 import { Map, Marker, TileLayer } from "react-leaflet";
 import { Link, useHistory } from "react-router-dom";
 import logo from "../../assets/logo.svg";
@@ -184,10 +185,12 @@ const CreatePoint = () => {
             </div>
             <div className="field">
               <label htmlFor="whatsapp">Whatsapp</label>
-              <input
+              <InputMask
                 type="text"
+                mask="(99) 9 9999-9999" 
                 name="whatsapp"
                 id="whatsapp"
+                maskChar={null}
                 onChange={handleInputChange}
               />
             </div>
