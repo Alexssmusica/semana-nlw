@@ -14,6 +14,7 @@ app.use(cors());
 app.use(express.json());
 app.use(routes);
 
+app.use('/statics', express.static(path.resolve(__dirname, '..', 'statics')));
 app.use('/uploads', express.static(path.resolve(__dirname, '..', 'uploads')));
 
 app.use(errors());
