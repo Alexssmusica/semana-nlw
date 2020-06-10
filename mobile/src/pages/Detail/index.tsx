@@ -1,11 +1,11 @@
-import { Feather as Icon, FontAwesome } from "@expo/vector-icons";
+import { Feather as Icon, FontAwesome } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import Constants from "expo-constants";
+import Constants from 'expo-constants';
 import * as MailComposer from 'expo-mail-composer';
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import { Image, Linking, Platform, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
-import api from "../../services/Api";
+import api from '../../services/Api';
 
 interface Params {
     point_id: number;
@@ -13,17 +13,17 @@ interface Params {
 
 interface Data {
     point: {
-        image: string,
-        name: string,
-        image_url: string,
-        email: string,
-        whatsapp: string,
-        city: string,
-        uf: string,
-    }
+        image: string;
+        name: string;
+        image_url: string;
+        email: string;
+        whatsapp: string;
+        city: string;
+        uf: string;
+    };
     items: {
-        title: string
-    }[]
+        title: string;
+    }[];
 }
 
 const Detail = () => {
@@ -33,16 +33,16 @@ const Detail = () => {
     const routeParams = route.params as Params;
 
     useEffect(() => {
-        api.get(`points/${routeParams.point_id}`).then(res => {
+        api.get(`points/${routeParams.point_id}`).then((res) => {
             setData(res.data);
-        })
+        });
     }, []);
 
     function handleNavigateBack() {
         navigation.goBack();
     }
 
-    if (!data.point){
+    if (!data.point) {
         return null;
     }
 
@@ -50,15 +50,14 @@ const Detail = () => {
         MailComposer.composeAsync({
             subject: 'Interesse na coleta de resíduos',
             recipients: [data.point.email],
-
-        })
+        });
     }
 
     function handleComposeWhatsapp() {
-        let phoneWithCountryCode = data.point.whatsapp;
-        let whatsapp = Platform.OS == 'ios' ? phoneWithCountryCode : `+${phoneWithCountryCode}`;
-        
-        Linking.openURL(`whatsapp://send?phone=${whatsapp}&text=Tenho interesse sobre coleta de resíduos`)
+        const phoneWithCountryCode = data.point.whatsapp;
+        const whatsapp = Platform.OS == 'ios' ? phoneWithCountryCode : `+${phoneWithCountryCode}`;
+
+        Linking.openURL(`whatsapp://send?phone=${whatsapp}&text=Tenho interesse sobre coleta de resíduos`);
     }
 
     return (
@@ -71,16 +70,14 @@ const Detail = () => {
                 <Image style={styles.pointImage} source={{ uri: data.point.image_url }} />
 
                 <Text style={styles.pointName}>{data.point.name}</Text>
-                <Text style={styles.pointItems}>
-                    {data.items.map(item => item.title).join(', ')}
-                </Text>
+                <Text style={styles.pointItems}>{data.items.map((item) => item.title).join(', ')}</Text>
 
                 <View style={styles.address}>
                     <Text style={styles.addressTitle}>Endereço</Text>
                     <Text style={styles.addressContent}>{`${data.point.city}, ${data.point.uf}`}</Text>
                 </View>
             </View>
-            <View style={styles.footer} >
+            <View style={styles.footer}>
                 <RectButton style={styles.button} onPress={handleComposeWhatsapp}>
                     <FontAwesome name="whatsapp" color="#fff" size={20} />
                     <Text style={styles.buttonText}>Whatsapp</Text>
@@ -92,9 +89,8 @@ const Detail = () => {
                 </RectButton>
             </View>
         </SafeAreaView>
-    )
-}
-
+    );
+};
 
 export default Detail;
 
@@ -102,7 +98,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 32,
-        paddingTop: 20 + Constants.statusBarHeight
+        paddingTop: 20 + Constants.statusBarHeight,
     },
 
     pointImage: {
@@ -125,7 +121,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         lineHeight: 24,
         marginTop: 8,
-        color: '#6C6C80'
+        color: '#6C6C80',
     },
 
     address: {
@@ -142,7 +138,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Roboto_400Regular',
         lineHeight: 24,
         marginTop: 8,
-        color: '#6C6C80'
+        color: '#6C6C80',
     },
 
     footer: {
@@ -151,7 +147,7 @@ const styles = StyleSheet.create({
         paddingVertical: 20,
         paddingHorizontal: 32,
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
     },
 
     button: {
@@ -161,7 +157,7 @@ const styles = StyleSheet.create({
         height: 50,
         flexDirection: 'row',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
 
     buttonText: {

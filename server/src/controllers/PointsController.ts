@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import knex from "../database/connection";
+import knex from '../database/connection';
 
 class PointsController {
     async index(req: Request, res: Response) {
@@ -7,7 +7,7 @@ class PointsController {
 
         const parsedItems = String(items)
             .split(',')
-            .map(item => Number(item.trim()));
+            .map((item) => Number(item.trim()));
 
         const points = await knex('points')
             .join('points_items', 'points.id', '=', 'points_items.point_id')
@@ -17,16 +17,15 @@ class PointsController {
             .distinct()
             .select('points.*');
 
-            const serializedPoints = points.map(point => {
-                return {
-                ...point,    
-                    image_url: `${process.env.APP_URL}:${process.env.APP_PORT}/uploads/${point.image}`
-                }
-            });
-        
-            return res.json(serializedPoints);
+        const serializedPoints = points.map((point) => {
+            return {
+                ...point,
+                image_url: `${process.env.APP_URL}:${process.env.APP_PORT}/uploads/${point.image}`,
+            };
+        });
 
-    };
+        return res.json(serializedPoints);
+    }
 
     async show(req: Request, res: Response) {
         const { id } = req.params;
@@ -38,8 +37,8 @@ class PointsController {
         }
 
         const serializedPoint = {
-            ...point,    
-            image_url: `${process.env.APP_URL}:${process.env.APP_PORT}/uploads/${point.image}` 
+            ...point,
+            image_url: `${process.env.APP_URL}:${process.env.APP_PORT}/uploads/${point.image}`,
         };
 
         const items = await knex('items')
@@ -48,20 +47,10 @@ class PointsController {
             .select('items.title');
 
         return res.json({ point: serializedPoint, items });
-    };
+    }
 
     async create(req: Request, res: Response) {
-
-        const {
-            name,
-            email,
-            whatsapp,
-            latitude,
-            longitude,
-            city,
-            uf,
-            items
-        } = req.body;
+        const { name, email, whatsapp, latitude, longitude, city, uf, items } = req.body;
 
         const trx = await knex.transaction();
 
@@ -73,7 +62,7 @@ class PointsController {
             latitude,
             longitude,
             city,
-            uf
+            uf,
         };
 
         const insertedIds = await trx('points').insert(point);
@@ -98,7 +87,6 @@ class PointsController {
             id: point_id,
             ...point,
         });
-
     }
 }
 
