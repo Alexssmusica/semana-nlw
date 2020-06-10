@@ -1,9 +1,10 @@
 import axios from 'axios';
+import { APP_PORT, APP_URL } from 'react-native-dotenv';
 
 
 
 const Api = axios.create({
-    baseURL: 'http://192.168.100.108:3333'
+baseURL: `${APP_URL}:${APP_PORT}`
 
 });
 
