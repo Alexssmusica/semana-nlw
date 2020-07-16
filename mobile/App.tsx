@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { Roboto_400Regular, Roboto_500Medium, useFonts } from '@expo-google-fonts/roboto';
 import { Ubuntu_700Bold } from '@expo-google-fonts/ubuntu';
@@ -7,24 +8,20 @@ import { StatusBar } from 'react-native';
 import Routes from './src/routes';
 
 export default function App() {
-  const [fontsLoaded] = useFonts({
-    Roboto_400Regular,
-    Roboto_500Medium,
-    Ubuntu_700Bold,
-  });
+    const [fontsLoaded] = useFonts({
+        Roboto_400Regular,
+        Roboto_500Medium,
+        Ubuntu_700Bold,
+    });
 
-  if (!fontsLoaded) {
-    return <AppLoading />;
-  }
+    if (!fontsLoaded) {
+        return <AppLoading />;
+    }
 
-  return (
-    <>
-      <StatusBar
-        barStyle="dark-content"
-        backgroundColor="transparent"
-        translucent
-      />
-      <Routes />
-    </>
-  );
+    return (
+        <>
+            <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent />
+            <Routes />
+        </>
+    );
 }
